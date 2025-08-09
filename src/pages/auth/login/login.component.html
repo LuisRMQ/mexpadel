@@ -2,26 +2,33 @@
   <div class="login-box">
     <div class="login-form">
       <img src="assets/mat-img-1.png" alt="Logo" class="logo">
-      <h2>Iniciar Sesión</h2>
+      <h2 style="font-family: 'Inter'">
+        {{ isRecoverPassword ? 'Recuperar Contraseña' : (isClub ? 'Iniciar Sesión (Club)' : 'Iniciar Sesión (Usuario)') }}
+      </h2>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-icon matPrefix>mail</mat-icon>
-        <input matInput placeholder="Correo..." type="email" />
-      </mat-form-field>
+      <!-- User Login Form Component -->
+      <app-user-login-form 
+        *ngIf="!isClub && !isRecoverPassword" 
+        (loginSubmit)="onUserLoginSubmit($event)">
+      </app-user-login-form>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-icon matPrefix>lock</mat-icon>
-        <input matInput placeholder="Contraseña" type="password" />
-      </mat-form-field>
+      <!-- Club Login Form Component -->
+      <app-club-login-form 
+        *ngIf="isClub && !isRecoverPassword" 
+        (loginSubmit)="onClubLoginSubmit($event)">
+      </app-club-login-form>
 
-      <div class="forgot-password">
-        <a href="#">¿Olvidaste tu contraseña?</a>
-      </div>
-
-      <button mat-raised-button color="white" class="login-button">INICIAR SESION</button>
+      <!-- Recover Password Form Component -->
+      <app-recover-password-form 
+        *ngIf="isRecoverPassword" 
+        (recoverSubmit)="onRecoverPasswordSubmit($event)">
+      </app-recover-password-form>
 
       <div class="register-link">
-        <a href="#">¿Eres un club?</a>
+        <a href="#" (click)="setClubMode(true); $event.preventDefault()" *ngIf="!isClub && !isRecoverPassword">¿Eres un club?</a>
+        <a href="#" (click)="setClubMode(false); $event.preventDefault()" *ngIf="isClub && !isRecoverPassword">¿Eres usuario?</a>
+        <a href="#" (click)="setRecoverPasswordMode(true); $event.preventDefault()" *ngIf="!isRecoverPassword">¿Olvidaste tu contraseña?</a>
+        <a href="#" (click)="setRecoverPasswordMode(false); $event.preventDefault()" *ngIf="isRecoverPassword">Volver al login</a>
       </div>
     </div>
 

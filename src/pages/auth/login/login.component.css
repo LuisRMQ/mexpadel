@@ -48,11 +48,23 @@
 
 .login-button {
   background-color: #28A745 !important; 
-  color: white;
-  font-weight: bold;
+  color: white !important;
+  font-weight: semibold;
   padding: 12px;
   border-radius: 30px;
   margin-bottom: 20px;
+}
+
+::ng-deep .login-button .mat-mdc-button-touch-target {
+  color: white !important;
+}
+
+::ng-deep .login-button .mdc-button__label {
+  color: white !important;
+}
+
+::ng-deep .login-button.mat-mdc-raised-button {
+  color: white !important;
 }
 
 .register-link {
@@ -63,6 +75,7 @@
   font-size: 13px;
   color: #3b82f6;
   text-decoration: none;
+  margin: 0 16px; /* Agregando separación horizontal de 16px entre enlaces */
 }
 
 .logo {
@@ -83,4 +96,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+::ng-deep .login-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .login-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .login-form .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #3b82f6 !important;
 }

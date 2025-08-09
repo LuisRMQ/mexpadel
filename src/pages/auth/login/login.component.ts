@@ -1,35 +1,48 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { ClubLoginFormComponent } from './club-login-form/club-login-form.component';
+import { RecoverPasswordFormComponent } from './recover-password-form/recover-password-form.component';
+import { UserLoginData, ClubLoginData, RecoverPasswordData } from './login.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,]
+    CommonModule,
+    UserLoginFormComponent,
+    ClubLoginFormComponent,
+    RecoverPasswordFormComponent
+  ],
+  standalone: true
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  isClub: boolean = false;
+  isRecoverPassword: boolean = false;
 
-  constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+  onUserLoginSubmit(loginData: UserLoginData): void {
+    console.log('User login:', loginData);
+    // Aquí puedes llamar a un servicio para autenticar usuario
   }
 
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      console.log('Inicio de sesión:', email, password);
-      // Aquí puedes llamar a un servicio para autenticar
-    }
+  onClubLoginSubmit(loginData: ClubLoginData): void {
+    console.log('Club login:', loginData);
+    // Aquí puedes llamar a un servicio para autenticar club
+  }
+
+  onRecoverPasswordSubmit(recoverData: RecoverPasswordData): void {
+    console.log('Recover password:', recoverData);
+    // Aquí puedes llamar a un servicio para recuperar contraseña
+  }
+
+  setClubMode(isClub: boolean): void {
+    this.isClub = isClub;
+    this.isRecoverPassword = false;
+  }
+
+  setRecoverPasswordMode(isRecoverPassword: boolean): void {
+    this.isRecoverPassword = isRecoverPassword;
+    this.isClub = false;
   }
 }
